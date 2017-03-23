@@ -86,7 +86,7 @@ private:
 		flags flag;
 	} credits_t;
 	
-	const credits_t credits[13] = {	{"Portapack|HAVOC", 	"Git hash " GIT_REVISION,	SECTION},
+	const credits_t credits[13] = {	{"Portapack|HAVOC", 	"Git hash " GIT_DESC,	SECTION}, //get a version which either uses a tag or commit number
 									{"Gurus",				"J. Boone", 				TITLE},
 									{"M. Ossmann",			"", 						MEMBER_LF},
 									{"Immaturity",			"Furrtek", 					TITLE_LF},
