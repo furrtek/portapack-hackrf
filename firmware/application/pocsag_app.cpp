@@ -151,8 +151,9 @@ void POCSAGAppView::on_packet(const POCSAGPacketMessage * message) {
 	if (result) {
 		std::string console_info;
 		
-		console_info = to_string_time(message->packet.timestamp()) + " ";
-		console_info += "B:" + pocsag::bitrate_str(message->packet.bitrate());  // "B:" caractere add for more visibility
+		console_info = "------------------------------"; //added for make limit between 2 messages
+		console_info += to_string_time(message->packet.timestamp());
+		console_info += " B:" + pocsag::bitrate_str(message->packet.bitrate()); // "B:" caractere add for more visibility
 		console_info += " ADDR:" + to_string_dec_uint(pocsag_state.address);
 		console_info += " F" + to_string_dec_uint(pocsag_state.function);
 
@@ -173,7 +174,7 @@ void POCSAGAppView::on_packet(const POCSAGPacketMessage * message) {
 				
 				console.writeln(console_info);
 				
-				console.writeln("Alpha:" + pocsag_state.output);
+				console.write("Alpha:" + pocsag_state.output);
 				
 				if (logger && logging) {
 					logger->on_decoded(message->packet, console_info);
@@ -184,7 +185,7 @@ void POCSAGAppView::on_packet(const POCSAGPacketMessage * message) {
 			} else {
 				// Message continues...
 				console.writeln(pocsag_state.output);
-				
+
 				if (logger && logging)
 					logger->on_decoded(message->packet, pocsag_state.output);
 			}
