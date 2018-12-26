@@ -105,7 +105,7 @@ void poll_ext_clock() {
 		prev_clkin_status = clkin_status;
 		StatusRefreshMessage message { };
 		EventDispatcher::send_message(message);
-		clock_manager.init();
+		clock_manager.init_peripherals();
 	}
 
 }

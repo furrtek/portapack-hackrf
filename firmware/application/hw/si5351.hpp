@@ -364,6 +364,10 @@ public:
 
 	void reset();
 
+	uint8_t device_status() {
+		return read_register(Register::DeviceStatus);
+	}
+
 	void wait_for_device_ready() {
 		while(device_status() & 0x80);
 	}
@@ -468,10 +472,6 @@ private:
 	I2C& _bus;
 	const I2C::address_t _address;
 	uint8_t _output_enable;
-
-	uint8_t device_status() {
-		return read_register(Register::DeviceStatus);
-	}
 	
 	void update_output_enable_control() {
 		write_register(Register::OutputEnableControl, ~_output_enable);
