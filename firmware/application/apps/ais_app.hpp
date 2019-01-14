@@ -123,6 +123,7 @@ public:
 	void set_entry(const AISRecentEntry& new_entry);
 	const AISRecentEntry& entry() const { return entry_; };
 
+	void update_position();
 	void focus() override;
 	void paint(Painter&) override;
 
@@ -137,6 +138,8 @@ private:
 		{ 19, 216, 96, 24 },
 		"See on map"
 	};
+	GeoMapView* geomap_view { nullptr };
+	bool send_updates { false };
 
 	Rect draw_field(
 		Painter& painter,

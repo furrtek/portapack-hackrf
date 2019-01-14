@@ -221,16 +221,27 @@ AISRecentEntryDetailView::AISRecentEntryDetailView(NavigationView& nav) {
 	};
 
 	button_see_map.on_select = [this, &nav](Button&) {
-		nav.push<GeoMapView>(
+		geomap_view = nav.push<GeoMapView>(
 			entry_.name,
 			0,
 			GeoPos::alt_unit::METERS,
-			ais::format::latlon_float(entry_.last_position.latitude.raw()),
-			ais::format::latlon_float(entry_.last_position.longitude.raw()),
-			entry_.last_position.true_heading);
+			ais::format::latlon_float(entry_.last_position.latitude.normalized()),
+			ais::format::latlon_float(entry_.last_position.longitude.normalized()),
+			entry_.last_position.true_heading,
+			[this]() {
+				send_updates = false;
+			});
+			send_updates = true;
+
+		
 	};
 	
 	
+}
+
+void AISRecentEntryDetailView::update_position() {
+	if (send_updates)
+		geomap_view->update_position(ais::format::latlon_float(entry_.last_position.latitude.normalized()), ais::format::latlon_float(entry_.last_position.longitude.normalized()));
 }
 
 void AISRecentEntryDetailView::focus() {
@@ -355,6 +366,7 @@ void AISAppView::on_packet(const ais::Packet& packet) {
 	// TODO: Crude hack, should be a more formal listener arrangement...
 	if( entry.key() == recent_entry_detail_view.entry().key() ) {
 		recent_entry_detail_view.set_entry(entry);
+		recent_entry_detail_view.update_position();
 	}
 }
 
