@@ -159,7 +159,8 @@ set(CPPSRC
 	clock_manager.cpp
 	core_control.cpp
 	de_bruijn.cpp
-	emu_cc1101.cpp
+	#emu_cc1101.cpp
+	rfm69.cpp
 	event_m0.cpp
 	file.cpp
 	freqman.cpp
@@ -225,6 +226,7 @@ set(CPPSRC
 	apps/ui_jammer.cpp
 	apps/ui_keyfob.cpp
 	apps/ui_lcr.cpp
+	apps/lge_app.cpp
 	apps/ui_mictx.cpp
 	apps/ui_modemsetup.cpp
 	apps/ui_morse.cpp
