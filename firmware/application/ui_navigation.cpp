@@ -475,22 +475,21 @@ SystemView::SystemView(
 		this->status_view.set_title(new_view.title());
 	};
 
-	// portapack::persistent_memory::set_playdead_sequence(0x8D1);
-				
+
 	// Initial view
-	/*if ((portapack::persistent_memory::playing_dead() == 0x5920C1DF) ||		// Enable code
-		(portapack::persistent_memory::ui_config() & 16)) {					// Login option
-		navigation_view.push<PlayDeadView>();
-	} else {*/
-	
+	if ((portapack::persistent_memory::playing_dead() == 0x5920C1DF) ||		// Enable code
+		(portapack::persistent_memory::config_login())) {					// Login option
 		navigation_view.push<SystemMenuView>();
-		
+		navigation_view.push<PlayDeadView>();
+	} else {
+		navigation_view.push<SystemMenuView>();
+
 		if (portapack::persistent_memory::config_splash())
 			navigation_view.push<BMPView>();
 		//else
 		//	navigation_view.push<SystemMenuView>();
-			
-	//}
+
+	}
 }
 
 Context& SystemView::context() const {
