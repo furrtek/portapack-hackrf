@@ -14,9 +14,8 @@ COPY ./ /havocsrc
 
 #Fetch dependencies from APT
 RUN apt-get update && \
-	apt-get install -y tar wget dfu-util cmake python python-pip && \
+	apt-get install -y tar wget dfu-util cmake python3 python-pip && \
 	apt-get -qy autoremove
-#Fetch additional dependencies from Python 2.x pip
 RUN pip install pyyaml
 
 #Grab the GNU ARM toolchain from arm.com
