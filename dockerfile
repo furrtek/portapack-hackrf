@@ -31,4 +31,4 @@ ENV PATH=$PATH:/opt/build/armbin/bin
 CMD cd /havocsrc && \
     mkdir build && cd build && \ 
     cmake .. && make firmware && \
-    cp /portapack-havoc/firmware/portapack-h1-havoc.bin /havocbin
+    cp /havocsrc/build/firmware/portapack-h1-havoc.bin /havocbin
