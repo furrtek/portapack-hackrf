@@ -26,7 +26,7 @@ RUN mkdir /opt/build && cd /opt/build && \
 
 RUN git init && \
     git remote add origin $GIT_URL && \
-    git fetch origin --depth 1 && git checkout -b master && \
+    git fetch origin --depth 1 && git checkout -b master origin/master && \
     git submodule update --init --recursive
 
 CMD git pull && \
