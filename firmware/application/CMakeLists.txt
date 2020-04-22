@@ -29,7 +29,7 @@ enable_language(C CXX ASM)
 
 project(application)
 
-include(apps/AppsOptions.cmake)
+include(apps/AppsSettings.cmake)
 
 # Compiler options here.
 set(USE_OPT "-Os -g --specs=nano.specs")
