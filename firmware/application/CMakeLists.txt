@@ -29,6 +29,8 @@ enable_language(C CXX ASM)
 
 project(application)
 
+include(apps/AppsOptions.cmake)
+
 # Compiler options here.
 set(USE_OPT "-Os -g --specs=nano.specs")
 
@@ -114,6 +116,10 @@ set(CPPSRC
 	${COMMON}/adsb_frame.cpp
 	${COMMON}/ais_baseband.cpp
 	${COMMON}/ais_packet.cpp
+	${COMMON}/sonde_packet.cpp
+	${COMMON}/tpms_packet.cpp
+	${COMMON}/pocsag.cpp
+	${COMMON}/pocsag_packet.cpp
 	${COMMON}/ak4951.cpp
 	${COMMON}/backlight.cpp
 	${COMMON}/baseband_cpld.cpp
@@ -138,14 +144,9 @@ set(CPPSRC
 	${COMMON}/message_queue.cpp
 	${COMMON}/morse.cpp
 	${COMMON}/png_writer.cpp
-	${COMMON}/pocsag.cpp
-	${COMMON}/pocsag_packet.cpp
 	${COMMON}/portapack_io.cpp
 	${COMMON}/portapack_persistent_memory.cpp
 	${COMMON}/portapack_shared_memory.cpp
-	${COMMON}/sonde_packet.cpp
-	# ${COMMON}/test_packet.cpp
-	${COMMON}/tpms_packet.cpp
 	${COMMON}/ui.cpp
 	${COMMON}/ui_focus.cpp
 	${COMMON}/ui_painter.cpp
@@ -195,7 +196,7 @@ set(CPPSRC
 	hw/si5351.cpp
 	hw/spi_pp.cpp
 	hw/touch_adc.cpp
-	ui_baseband_stats_view.cpp
+	#ui_baseband_stats_view.cpp
 	ui_navigation.cpp
 	ui_playdead.cpp
 	ui_record_view.cpp
@@ -215,64 +216,22 @@ set(CPPSRC
 	ui/ui_textentry.cpp
 	ui/ui_transmitter.cpp
 	apps/ui_about.cpp
-	apps/ui_adsb_rx.cpp
-	apps/ui_adsb_tx.cpp
-	apps/ui_afsk_rx.cpp
-	apps/ui_btle_rx.cpp
-	apps/ui_nrf_rx.cpp
-	apps/ui_aprs_tx.cpp
-	apps/ui_bht_tx.cpp
-	apps/ui_coasterp.cpp
-	# apps/ui_debug.cpp
-	apps/ui_encoders.cpp
 	apps/ui_fileman.cpp
 	apps/ui_freqman.cpp
-	apps/ui_jammer.cpp
-	apps/ui_keyfob.cpp
-	apps/ui_lcr.cpp
-	apps/lge_app.cpp
-	apps/ui_mictx.cpp
 	apps/ui_modemsetup.cpp
-	apps/ui_morse.cpp
-	# apps/ui_nuoptix.cpp
-	apps/ui_pocsag_tx.cpp
-	apps/ui_rds.cpp
-	apps/ui_remote.cpp
-	apps/ui_scanner.cpp
-	apps/ui_search.cpp
 	apps/ui_sd_wipe.cpp
 	apps/ui_settings.cpp
-	apps/ui_siggen.cpp
-	apps/ui_sonde.cpp
-	apps/ui_sstvtx.cpp
-	# apps/ui_test.cpp
-	apps/ui_tone_search.cpp
 	apps/ui_touch_calibration.cpp
-	apps/ui_touchtunes.cpp
 	apps/ui_view_wav.cpp
 	apps/ui_whipcalc.cpp
-	apps/acars_app.cpp
-	apps/ais_app.cpp
-	apps/analog_audio_app.cpp
-	apps/analog_tv_app.cpp
-	apps/capture_app.cpp
-	apps/ert_app.cpp
-	apps/lge_app.cpp
-	apps/pocsag_app.cpp
 	apps/replay_app.cpp
-	apps/soundboard_app.cpp
-	apps/tpms_app.cpp
-	protocols/aprs.cpp
-	protocols/ax25.cpp
-	protocols/bht.cpp
-	protocols/dcs.cpp
-	protocols/encoders.cpp
-	protocols/lcr.cpp
+	apps/capture_app.cpp
+	apps/ui_search.cpp
+	apps/ui_scanner.cpp
+	apps/ui_siggen.cpp
 	protocols/modems.cpp
-	protocols/rds.cpp
 	# ui_handwrite.cpp
 	# ui_loadmodule.cpp
-	# ui_numbers.cpp
 	# ui_replay_view.cpp
 	# ui_script.cpp
 	# ui_sd_card_debug.cpp
@@ -280,6 +239,256 @@ set(CPPSRC
 	${CPLD_20170522_DATA_CPP}
 	${HACKRF_CPLD_DATA_CPP}
 )
+
+# Compile logic for RX apps
+
+if(USE_APP_RX_ADSB)
+	list(APPEND CPPSRC apps/ui_adsb_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_ADSB)
+endif()
+
+if(USE_APP_RX_ACARS)
+	list(APPEND CPPSRC apps/acars_app.cpp)
+	add_compile_definitions(WITH_APP_RX_ACARS)
+endif()
+
+if(USE_APP_RX_AIS)
+	list(APPEND CPPSRC apps/ais_app.cpp)
+	add_compile_definitions(WITH_APP_RX_AIS)
+endif()
+
+if(USE_APP_RX_AFSK)
+	list(APPEND CPPSRC apps/ui_afsk_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_AFSK)
+endif()
+
+if(USE_APP_RX_AUDIO)
+	list(APPEND CPPSRC apps/analog_audio_app.cpp)
+	add_compile_definitions(WITH_APP_RX_AUDIO)
+endif()
+
+if(USE_APP_RX_ANALOGTV)
+	list(APPEND CPPSRC apps/analog_tv_app.cpp)
+	add_compile_definitions(WITH_APP_RX_ANALOGTV)
+endif()
+
+if(USE_APP_RX_BTLE)
+	list(APPEND CPPSRC apps/ui_btle_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_BTLE)
+endif()
+
+if(USE_APP_RX_ERT)
+	list(APPEND CPPSRC apps/ert_app.cpp)
+	add_compile_definitions(WITH_APP_RX_ERT)
+endif()
+
+if(USE_APP_RX_NRF)
+	list(APPEND CPPSRC apps/ui_nrf_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_NRF)
+endif()
+
+if(USE_APP_RX_POCSAG)
+	list(APPEND CPPSRC apps/pocsag_app.cpp)
+	add_compile_definitions(WITH_APP_RX_POCSAG)
+endif()
+
+if(USE_APP_RX_RADIOSONDE)
+	list(APPEND CPPSRC apps/ui_sonde.cpp)
+	add_compile_definitions(WITH_APP_RX_RADIOSONDE)
+endif()
+
+if(USE_APP_RX_TPMS)
+	list(APPEND CPPSRC apps/tpms_app.cpp)
+	add_compile_definitions(WITH_APP_RX_TPMS)
+endif()
+
+if(USE_APP_RX_APRS)
+	# TODO
+	#list(APPEND CPPSRC apps/apps/ui_aprs_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_APRS)
+endif()
+
+if(USE_APP_RX_DMR)
+	# TODO
+	#list(APPEND CPPSRC apps/ui_dmr_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_DMR)
+endif()
+
+if(USE_APP_RX_SIGFOX)
+	# TODO
+	#list(APPEND CPPSRC apps/ui_sigfox_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_SIGFOX)
+endif()
+
+if(USE_APP_RX_LORA)
+	# TODO
+	#list(APPEND CPPSRC apps/ui_lora_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_LORA)
+endif()
+
+if(USE_APP_RX_SSTV)
+	# TODO
+	#list(APPEND CPPSRC apps/ui_sstv_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_SSTV)
+endif()
+
+if(USE_APP_RX_TETRA)
+	# TODO
+	#list(APPEND CPPSRC apps/ui_tetra_rx.cpp)
+	add_compile_definitions(WITH_APP_RX_TETRA)
+endif()
+
+
+# Compile logic for TX apps
+
+if(USE_APP_TX_ADSB)
+	list(APPEND CPPSRC apps/ui_adsb_tx.cpp)
+	add_compile_definitions(WITH_APP_TX_ADSB)
+endif()
+
+if(USE_APP_TX_APRS)
+	list(APPEND CPPSRC apps/ui_aprs_tx.cpp)
+	add_compile_definitions(WITH_APP_TX_APRS)
+endif()
+
+if(USE_APP_TX_BHT)
+	list(APPEND CPPSRC apps/ui_bht_tx.cpp)
+	add_compile_definitions(WITH_APP_TX_BHT)
+endif()
+
+if(USE_APP_TX_JAMMER)
+	list(APPEND CPPSRC apps/ui_jammer.cpp)
+	add_compile_definitions(WITH_APP_TX_JAMMER)
+endif()
+
+if(USE_APP_TX_KEYFOB)
+	list(APPEND CPPSRC apps/ui_keyfob.cpp)
+	add_compile_definitions(WITH_APP_TX_KEYFOB)
+endif()
+
+if(USE_APP_TX_LGE)
+	list(APPEND CPPSRC apps/lge_app.cpp)
+	add_compile_definitions(WITH_APP_TX_LGE)
+endif()
+
+if(USE_APP_TX_MIC)
+	list(APPEND CPPSRC apps/ui_mictx.cpp)
+	add_compile_definitions(WITH_APP_TX_MIC)
+endif()
+
+if(USE_APP_TX_MORSE)
+	list(APPEND CPPSRC apps/ui_morse.cpp)
+	add_compile_definitions(WITH_APP_TX_MORSE)
+endif()
+
+if(USE_APP_TX_BURGERPAGER)
+	list(APPEND CPPSRC apps/ui_coasterp.cpp)
+	add_compile_definitions(WITH_APP_TX_BURGERPAGER)
+endif()
+
+if(USE_APP_TX_NUOPTIX)
+	list(APPEND CPPSRC apps/ui_nuoptix.cpp)
+	add_compile_definitions(WITH_APP_TX_NUOPTIX)
+endif()
+
+if(USE_APP_TX_OOK)
+	list(APPEND CPPSRC apps/ui_encoders.cpp)
+	add_compile_definitions(WITH_APP_TX_OOK)
+endif()
+
+if(USE_APP_TX_POCSAG)
+	list(APPEND CPPSRC apps/ui_pocsag_tx.cpp)
+	add_compile_definitions(WITH_APP_TX_POCSAG)
+endif()
+
+if(USE_APP_TX_RDS)
+	list(APPEND CPPSRC apps/ui_rds.cpp)
+	add_compile_definitions(WITH_APP_TX_RDS)
+endif()
+
+if(USE_APP_TX_SOUNDBOARD)
+	list(APPEND CPPSRC apps/soundboard_app.cpp)
+	add_compile_definitions(WITH_APP_TX_SOUNDBOARD)
+endif()
+
+if(USE_APP_TX_SSTV)
+	list(APPEND CPPSRC apps/ui_sstvtx.cpp)
+	add_compile_definitions(WITH_APP_TX_SSTV)
+endif()
+
+if(USE_APP_TX_LCR)
+	list(APPEND CPPSRC apps/ui_lcr.cpp)
+	add_compile_definitions(WITH_APP_TX_LCR)
+endif()
+
+if(USE_APP_TX_TOUCHETUNE)
+	list(APPEND CPPSRC apps/ui_touchtunes.cpp)
+	add_compile_definitions(WITH_APP_TX_TOUCHETUNE)
+endif()
+
+if(USE_APP_TX_REMOTE)
+	list(APPEND CPPSRC apps/ui_remote.cpp)
+	add_compile_definitions(WITH_APP_TX_REMOTE)
+endif()
+
+if(USE_APP_TX_NUMBERS)
+	list(APPEND CPPSRC apps/ui_numbers.cpp)
+	add_compile_definitions(WITH_APP_TX_NUMBERS)
+endif()
+
+
+# Compile logic for others apps 
+
+if(USE_APP_TONESEARCH)
+	list(APPEND CPPSRC apps/ui_tone_search.cpp)
+	add_compile_definitions(WITH_APP_TONESEARCH)
+endif()
+
+if(USE_APP_DEBUG)
+	list(APPEND CPPSRC apps/ui_debug.cpp)
+	add_compile_definitions(WITH_APP_DEBUG)
+endif()
+
+if(USE_APP_TEST)
+	list(APPEND CPPSRC apps/ui_test.cpp)
+	add_compile_definitions(WITH_APP_TEST)
+endif()
+
+
+# Compile logic for shared protocols & commons
+
+if(USE_APP_RX_ADSB OR USE_APP_TX_ADSB)
+	list(APPEND CPPSRC 	protocols/aprs.cpp
+						protocols/ax25.cpp
+	)
+endif()
+
+if(USE_APP_TX_BHT)
+	list(APPEND CPPSRC 	protocols/bht.cpp)
+endif()
+
+if(USE_APP_TX_LCR)
+	list(APPEND CPPSRC 	protocols/lcr.cpp)
+endif()
+
+if(USE_APP_RX_OOK OR USE_APP_TX_BHT OR USE_APP_TX_KEYFOB OR USE_APP_TX_TOUCHETUNE)
+	list(APPEND CPPSRC 	protocols/encoders.cpp)
+endif()
+
+if(USE_APP_TX_RDS)
+	list(APPEND CPPSRC 	protocols/rds.cpp)
+endif()
+
+# TODO : DCS decoder
+if(0)
+	list(APPEND CPPSRC 	protocols/dcs.cpp)
+endif()
+
+if(USE_APP_TEST)
+	list(APPEND CPPSRC 	${COMMON}/test_packet.cpp)
+endif()
+
+
 
 # C sources to be compiled in ARM mode regardless of the global setting.
 # NOTE: Mixing ARM and THUMB mode enables the -mthumb-interwork compiler
