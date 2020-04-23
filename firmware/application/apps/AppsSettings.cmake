@@ -25,7 +25,7 @@
 ############
 
 # Enable an app only if you have a clue about what you are doing.
-# Some apps may RX/TX with the pre-amp ON by default and/or tuned to a predefined frequency. Resulting with hardware damage/failure.
+# Some apps may RX/TX with the pre-amp ON by default and/or tuned to a predefined frequency. May result in hardware damage/failure when using unmatched antenna.
 
 ##################################
 ## Enable/Disable Receiver apps ##
