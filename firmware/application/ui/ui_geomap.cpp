@@ -200,7 +200,7 @@ void GeoMap::move(const float lon, const float lat) {
 	double lat_rad = sin(lat * pi / 180);
 	double map_world_lon = map_width / (2 * pi); 
     double map_offset = (map_world_lon / 2 * log((1 + map_bottom) / (1 - map_bottom)));
-	y_pos = map_height - ((map_world_lon / 2 * log((1 + lat_rad) / (1 - lat_rad))) - map_offset) - 128; // Offset added for the GUI
+	y_pos = map_height - ((map_world_lon / 2 * log((1 + lat_rad) / (1 - lat_rad))) - map_offset) - 126; // Offset added for the GUI
 
 	// Cap position
 	if (x_pos > (map_width - map_rect.width()))
