@@ -28,27 +28,27 @@
 #define __ENCODERS_H__
 
 namespace encoders {
-	
-	#define ENC_TYPES_COUNT 14
+
+	#define ENC_TYPES_COUNT 13
 	#define OOK_SAMPLERATE	2280000U
-	
+
 	#define ENCODER_UM3750	8
-	
+
 	size_t make_bitstream(std::string& fragments);
 	void bitstream_append(size_t& bitstream_length, uint32_t bit_count, uint32_t bits);
 
 	struct encoder_def_t {
-		char name[16];							// Encoder chip ref/name
+		char name[16];									// Encoder chip ref/name
 		char address_symbols[8];				// List of possible symbols like "01", "01F"...
-		char data_symbols[8];					// Same
+		char data_symbols[8];						// Same
 		uint16_t clk_per_symbol;				// Oscillator periods per symbol
-		uint16_t clk_per_fragment;				// Oscillator periods per symbol fragment (state)
+		uint16_t clk_per_fragment;			// Oscillator periods per symbol fragment (state)
 		char bit_format[4][20];					// List of fragments for each symbol in previous *_symbols list order
-		uint8_t word_length;					// Total # of symbols (not counting sync)
-		char word_format[32];					// A for Address, D for Data, S for sync
-		char sync[64];							// Like bit_format
+		uint8_t word_length;						// Total # of symbols (not counting sync)
+		char word_format[32];						// A for Address, D for Data, S for sync
+		char sync[64];									// Like bit_format
 		uint32_t default_speed;					// Default encoder clk frequency (often set by shitty resistor)
-		uint8_t repeat_min;						// Minimum repeat count
+		uint8_t repeat_min;							// Minimum repeat count
 		uint16_t pause_symbols;					// Length of pause between repeats in symbols
 	};
 
@@ -65,7 +65,7 @@ namespace encoders {
 			150000,	2,
 			0
 		},
-		
+
 		// PT2260-R4
 		{
 			"2260-R4",
@@ -77,7 +77,7 @@ namespace encoders {
 			150000,	2,
 			0
 		},
-		
+
 		// PT2262
 		{
 			"2262   ",
@@ -89,7 +89,7 @@ namespace encoders {
 			20000,	4,
 			0
 		},
-		
+
 		// 16-bit ?
 		{
 			"16-bit ",
@@ -101,7 +101,7 @@ namespace encoders {
 			25000,	50,
 			0	// ?
 		},
-		
+
 		// RT1527
 		{
 			"1527   ",
@@ -113,7 +113,7 @@ namespace encoders {
 			100000,	4,
 			10	// ?
 		},
-		
+
 		// HK526E
 		{
 			"526E   ",
@@ -125,7 +125,7 @@ namespace encoders {
 			20000, 4,
 			10	// ?
 		},
-		
+
 		// HT12E
 		{
 			"12E    ",
@@ -137,19 +137,8 @@ namespace encoders {
 			3000, 4,
 			10	// ?
 		},
-			
-		// VD5026 13 bits ?
-		{
-			"5026   ",
-			"0123", "0123",
-			128, 8,
-			{ "1000000010000000", "1111111011111110", "1111111010000000", "1000000011111110" },
-			12,	"SAAAAAAAAAAAA",
-			"000000000000000000000000000000000000000000000001",		// ?
-			100000,	4,
-			10	// ?
-		},
-		
+
+
 		// UM3750
 		{
 			"UM3750 ",
@@ -161,7 +150,7 @@ namespace encoders {
 			100000,	4,
 			(3 * 12) - 6	// Compensates for pause delay bug in proc_ook
 		},
-		
+
 		// UM3758
 		{
 			"UM3758 ",
@@ -173,7 +162,7 @@ namespace encoders {
 			160000,	4,
 			10	// ?
 		},
-		
+
 		// BA5104
 		{
 			"BA5104 ",
@@ -185,7 +174,7 @@ namespace encoders {
 			455000,	4,
 			10	// ?
 		},
-			
+
 		// MC145026
 		{
 			"145026 ",
@@ -197,7 +186,7 @@ namespace encoders {
 			455000,	2,
 			2
 		},
-		
+
 		// HT6*** TODO: Add individual variations
 		{
 			"HT6*** ",
@@ -209,7 +198,7 @@ namespace encoders {
 			80000,	3,
 			10	// ?
 		},
-		
+
 		// TC9148
 		{
 			"TC9148 ",
