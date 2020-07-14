@@ -209,6 +209,7 @@ set(CPPSRC
 	ui/ui_btngrid.cpp
 	ui/ui_receiver.cpp
 	ui/ui_rssi.cpp
+	ui/ui_tv.cpp
 	ui/ui_spectrum.cpp
 	ui/ui_tabview.cpp
 	ui/ui_textentry.cpp
@@ -217,10 +218,12 @@ set(CPPSRC
 	apps/ui_adsb_rx.cpp
 	apps/ui_adsb_tx.cpp
 	apps/ui_afsk_rx.cpp
+	apps/ui_btle_rx.cpp
+	apps/ui_nrf_rx.cpp
 	apps/ui_aprs_tx.cpp
 	apps/ui_bht_tx.cpp
 	apps/ui_coasterp.cpp
-	# apps/ui_debug.cpp
+	apps/ui_debug.cpp
 	apps/ui_encoders.cpp
 	apps/ui_fileman.cpp
 	apps/ui_freqman.cpp
@@ -251,11 +254,13 @@ set(CPPSRC
 	apps/acars_app.cpp
 	apps/ais_app.cpp
 	apps/analog_audio_app.cpp
+	apps/analog_tv_app.cpp
 	apps/capture_app.cpp
 	apps/ert_app.cpp
 	apps/lge_app.cpp
 	apps/pocsag_app.cpp
 	apps/replay_app.cpp
+	apps/gps_sim_app.cpp
 	apps/soundboard_app.cpp
 	apps/tpms_app.cpp
 	protocols/aprs.cpp
@@ -271,7 +276,7 @@ set(CPPSRC
 	# ui_numbers.cpp
 	# ui_replay_view.cpp
 	# ui_script.cpp
-	# ui_sd_card_debug.cpp
+	ui_sd_card_debug.cpp
 	${CPLD_20150901_DATA_CPP}
 	${CPLD_20170522_DATA_CPP}
 	${HACKRF_CPLD_DATA_CPP}
